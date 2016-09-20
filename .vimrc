@@ -6,7 +6,7 @@ set hlsearch
 map <MiddleMouse> <Nop>
 map <2-MiddleMouse> <Nop>
 " Use Ctrl+Rigth click and Ctrl+Middle click for text copying.
-map <C-MiddleMouse> "+gP
+map <C-LeftMouse> "+gP
 map <C-RightMouse> "+y
 
 " Shift+Space - indent 1 space
@@ -17,21 +17,35 @@ map indent1 :s/^/ /g<CR>
 map indent2 :s/^/  /g<CR>
 map unindent1 :s/^ //g<CR>
 map unindent2 :s/^  //g<CR>
-map <s-space> indent1 gv
-map <c-space> unindent1 gv
-map <s-tab> indent2 gv
-map <c-tab> unindent2 gv
+nmap <s-space> indent1
+vmap <s-space> indent1 gv
+nmap <c-space> unindent1
+vmap <c-space> unindent1 gv
+nmap <s-tab> indent2
+vmap <s-tab> indent2 gv
+nmap <c-tab> unindent2
+vmap <c-tab> unindent2 gv
 
 " Ctrl+Insert - comment (C-style)
 " " Ctrl+Insert - comment (vim style)
 " ; Crtl+Insert - comment (asm style)
 " # Ctrl+Insert - comment (script style)
 " Ctrl+Del - uncomment (all styles)
-map <C-Insert> :s/^/\/\//g<CR>
-map "<C-Insert> :s/^/\"/g<CR>
-map ;<C-Insert> :s/^/;/g<CR>
-map #<C-Insert> :s/^/#/g<CR>
-map <C-Del> :s/^\(\s*\)\(\/\/\\|#\\|\"\\|;\)/\1/g<CR>
+map ccomment :s/^/\/\//g<CR>
+map vimcomment :s/^/\"/g<CR>
+map asmcomment :s/^/;/g<CR>
+map shcomment :s/^/#/g<CR>
+map uncomment :s/^\(\s*\)\(\/\/\\|#\\|\"\\|;\)/\1/g<CR>
+nmap <C-Insert> ccomment
+vmap <C-Insert> ccomment gv
+nmap "<C-Insert> vimcomment
+vmap "<C-Insert> vimcomment gv
+nmap ;<C-Insert> asmcomment
+vmap ;<C-Insert> asmcomment gv
+nmap #<C-Insert> shcomment
+vmap #<C-Insert> shcomment gv
+nmap <C-Del> uncomment
+vmap <C-Del> uncomment gv
 
 " Reload .vimrc.
 command! ReloadVimRc so ~/.vimrc
