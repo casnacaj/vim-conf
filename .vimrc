@@ -89,6 +89,22 @@ endif
 
 
 
+" Set how whitespace is displayed.
+" To display list of chars, use :dig.
+set list
+set listchars=eol:¶,tab:├┄,trail:·,extends:»,precedes:«,conceal:∷,nbsp:▒
+hi SpecialKey guifg=lightgrey
+hi NonText guifg=lightgrey
+
+" Set indentation.
+set shiftwidth=2
+
+" Set spaces instead of tabs.
+set expandtab
+set tabstop=2
+
+command! ShowWindowsLineBreaks e ++ff=unix
+
 " highlight occurence of selected text
 set hlsearch
 
