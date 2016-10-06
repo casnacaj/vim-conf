@@ -20,6 +20,11 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'flazz/vim-colorschemes'
 
+NeoBundle 'vim-pandoc/vim-pandoc'
+NeoBundle 'vim-pandoc/vim-pandoc-syntax'
+NeoBundle 'vim-pandoc/vim-pandoc-after'
+NeoBundle 'tex/vimpreviewpandoc'
+
 " You can specify revision/branch/tag.
 NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
 
@@ -33,6 +38,54 @@ filetype plugin indent on
 " this will conveniently prompt you to install them.
 NeoBundleCheck
 "End NeoBundle Scripts-------------------------
+
+
+
+if neobundle#tap("unite.vim")
+            \ && neobundle#tap("vim-unite-giti")
+            \ && neobundle#tap("vimpreviewpandoc")
+
+    function! s:is_graph_only_line(candidate)
+        return has_key(a:candidate.action__data, 'hash') ? 0 : 1
+    endfunction
+
+    let s:pandoc_diff_action = {
+        \ 'description' : 'pandoc diff with vimpreviewpandoc',
+        \ 'is_selectable' : 1,
+        \ 'is_quit' : 1,
+        \ 'is_invalidate_cache' : 0,
+        \ }
+    function! s:pandoc_diff_action.func(candidates)
+        if s:is_graph_only_line(a:candidates[0])
+                    \ || len(a:candidates) > 1 && s:is_graph_only_line(a:candidates[1])
+            call giti#print('graph only line')
+            return
+        endif
+
+        let from  = ''
+        let to    = ''
+        let file  = len(a:candidates[0].action__file) > 0
+                    \               ? a:candidates[0].action__file
+                    \               : expand('%:p')
+        let relative_path = giti#to_relative_path(file)
+        if len(a:candidates) == 1
+            let to   = a:candidates[0].action__data.hash
+            let from = a:candidates[0].action__data.parent_hash
+        elseif len(a:candidates) == 2
+            let to   = a:candidates[0].action__data.hash
+            let from = a:candidates[1].action__data.hash
+        else
+            call unite#print_error('too many commits selected')
+            return
+        endif
+
+        call vimpreviewpandoc#VimPreviewPandocGitDiff(relative_path, from, to)
+    endfunction
+
+    call unite#custom#action('giti/log', 'diff_pandoc_preview', s:pandoc_diff_action)
+    unlet s:pandoc_diff_action
+
+endif
 
 
 
