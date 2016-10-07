@@ -20,10 +20,14 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'flazz/vim-colorschemes'
 
+" pandoc related.
 NeoBundle 'vim-pandoc/vim-pandoc'
 NeoBundle 'vim-pandoc/vim-pandoc-syntax'
 NeoBundle 'vim-pandoc/vim-pandoc-after'
 NeoBundle 'tex/vimpreviewpandoc'
+
+" File templates.
+NeoBundle 'aperezdc/vim-template'
 
 " You can specify revision/branch/tag.
 NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
@@ -103,6 +107,11 @@ set shiftwidth=2
 set expandtab
 set tabstop=2
 
+" Command to switch ignore/noinore case.
+command! IgnoreCase set ignorecase
+command! DntIgnoreCase set noignorecase
+
+" Command to show line breaks
 command! ShowWindowsLineBreaks e ++ff=unix
 
 " highlight occurence of selected text
@@ -176,4 +185,12 @@ function! RefreshAllPyTags()
 endfunction
 
 command! PyAt call RefreshAllPyTags()
+
+
+
+" Setup vim-templates plugin.
+let g:templates_no_autocmd = 1
+let g:templates_directory = "~/.vim/templates"
+let g:templates_no_builtin_templates = 1
+" let g:templates_user_variables = 
 
