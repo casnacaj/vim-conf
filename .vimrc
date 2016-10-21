@@ -110,6 +110,7 @@ set tabstop=2
 " Command to switch ignore/noinore case.
 command! IgnoreCase set ignorecase
 command! DntIgnoreCase set noignorecase
+command! DontIgnoreCase set noignorecase
 
 " Command to show line breaks
 command! ShowWindowsLineBreaks e ++ff=unix
@@ -194,3 +195,8 @@ let g:templates_directory = "~/.vim/templates"
 let g:templates_no_builtin_templates = 1
 " let g:templates_user_variables = 
 
+
+" Higlight FIXME text.
+syn match FIXME_kw "FIXME" contained
+hi kbYellow guibg=Yellow
+hi def link FIXME_kw kbYellow
