@@ -200,3 +200,11 @@ let g:templates_no_builtin_templates = 1
 syn match FIXME_kw "FIXME" contained
 hi kbYellow guibg=Yellow
 hi def link FIXME_kw kbYellow
+
+" Set colorcolumn color.
+hi ColorColumn guifg=black
+" Draw 80th columnt using colorcolumn.
+" Turn it by default.
+set colorcolumn=81
+command! ColumnOn set colorcolumn=81
+command! ColumnOff set colorcolumn=0
