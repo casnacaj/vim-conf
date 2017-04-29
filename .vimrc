@@ -1,3 +1,5 @@
+set enc=utf-8
+
 "NeoBundle Scripts-----------------------------
 if &compatible
   set nocompatible               " Be iMproved
