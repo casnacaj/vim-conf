@@ -154,16 +154,16 @@ map vimcomment :s/^/\"/g<CR>
 map asmcomment :s/^/;/g<CR>
 map shcomment :s/^/#/g<CR>
 map uncomment :s/^\(\s*\)\(\/\/\\|#\\|\"\\|;\)/\1/g<CR>
-nmap <C-Insert> ccomment
-vmap <C-Insert> ccomment gv
-nmap "<C-Insert> vimcomment
-vmap "<C-Insert> vimcomment gv
-nmap ;<C-Insert> asmcomment
-vmap ;<C-Insert> asmcomment gv
-nmap #<C-Insert> shcomment
-vmap #<C-Insert> shcomment gv
-nmap <C-Del> uncomment
-vmap <C-Del> uncomment gv
+nmap <C-BS> ccomment
+vmap <C-BS> ccomment gv
+nmap "<C-BS> vimcomment
+vmap "<C-BS> vimcomment gv
+nmap ;<C-BS> asmcomment
+vmap ;<C-BS> asmcomment gv
+nmap #<C-BS> shcomment
+vmap #<C-BS> shcomment gv
+nmap <C-S-BS> uncomment
+vmap <C-S-BS> uncomment gv
 
 " Reload .vimrc.
 command! ReloadVimRc so ~/.vimrc
