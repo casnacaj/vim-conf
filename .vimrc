@@ -170,10 +170,12 @@ command! ReloadVimRc so ~/.vimrc
 
 " At - Refresh ctags and cscope.
 function! RefreshAllTags()
-"  !ctags -R --extra=f langmap=Asm:+.inc
-  !ctags -R --extra=f
+  !ctags -R --extra=f --langmap=Asm:+.inc
+"  !ctags -R --extra=f
   cs kill 0
-  !cscope -bq $(find -iregex '.+\.\(cpp\|C\|c\|h\|H\|hpp\|asm\|inc\)')
+"  !cscope -bq $(find -iregex '.+\.\(cpp\|C\|c\|h\|H\|hpp\|asm\|inc\)')
+  !find -iregex '.+\.\(cpp\|C\|c\|h\|H\|hpp\|asm\|inc\|s\|S\)' -fprintf cscope.files '"\%p"\n'
+  !cscope -bq
   cs add cscope.out
 endfunction
 
