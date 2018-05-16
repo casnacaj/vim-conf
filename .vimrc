@@ -1,5 +1,7 @@
 set enc=utf-8
 
+set guifont=Monospace\ Regular\ 9
+
 "NeoBundle Scripts-----------------------------
 if &compatible
   set nocompatible               " Be iMproved
@@ -131,29 +133,29 @@ map <C-RightMouse> "+y
 " Ctrl+Space - unindent 1 space
 " Shift+Tab - indent 2 spaces
 " Shift+Tab - unindent 2 spaces
-map indent1 :s/^/ /g<CR>
-map indent2 :s/^/  /g<CR>
-map unindent1 :s/^ //g<CR>
-map unindent2 :s/^  //g<CR>
+map indent1 :s/^/ /ge<CR>
+map unindent1 :s/^ //ge<CR>
 nmap <s-space> indent1
 vmap <s-space> indent1 gv
 nmap <c-space> unindent1
 vmap <c-space> unindent1 gv
-nmap <s-tab> indent2
-vmap <s-tab> indent2 gv
-nmap <c-tab> unindent2
-vmap <c-tab> unindent2 gv
+nmap <s-tab> :s/^/  /ge \| s/\*\*\(\*\+\)/\1/ge<CR>
+vmap <s-tab> :s/^/  /ge \| '<,'>s/\*\*\(\*\+\)/\1/ge<CR> gv
+nmap <c-tab> :s/^  //ge \| s/\*\*\*\+/\0**/ge<CR><CR>
+vmap <c-tab> :s/^  //ge \| '<,'>s/\*\*\*\+/\0**/ge<CR> gv
 
 " Ctrl+Insert - comment (C-style)
 " " Ctrl+Insert - comment (vim style)
 " ; Crtl+Insert - comment (asm style)
 " # Ctrl+Insert - comment (script style)
 " Ctrl+Del - uncomment (all styles)
-map ccomment :s/^/\/\//g<CR>
-map vimcomment :s/^/\"/g<CR>
-map asmcomment :s/^/;/g<CR>
-map shcomment :s/^/#/g<CR>
-map uncomment :s/^\(\s*\)\(\/\/\\|#\\|\"\\|;\)/\1/g<CR>
+map ccomment :s/^/\/\//ge<CR>
+map vimcomment :s/^/\"/ge<CR>
+map asmcomment :s/^/;/ge<CR>
+map shcomment :s/^/#/ge<CR>
+map uncomment :s/^\(\s*\)\(\/\/\\|#\\|\"\\|;\)/\1/ge<CR>
+map starit :s/\*\*\*\+/\0**/ge<CR>
+map unstarit :s/\*\*\(\*\+\)/\1/ge<CR>
 nmap <C-BS> ccomment
 vmap <C-BS> ccomment gv
 nmap "<C-BS> vimcomment
@@ -164,6 +166,10 @@ nmap #<C-BS> shcomment
 vmap #<C-BS> shcomment gv
 nmap <C-S-BS> uncomment
 vmap <C-S-BS> uncomment gv
+"nmap *<C-BS> starit
+"vmap *<C-BS> starit gv
+"nmap *<C-S-BS> unstarit
+"vmap *<C-S-BS> unstarit gv
 
 " Reload .vimrc.
 command! ReloadVimRc so ~/.vimrc
@@ -209,6 +215,25 @@ hi def link FIXME_kw kbYellow
 hi ColorColumn guifg=black
 " Draw 80th columnt using colorcolumn.
 " Turn it by default.
-set colorcolumn=81
-command! ColumnOn set colorcolumn=81
+let &colorcolumn="81,121"
+command! ColumnOn let &colorcolumn="81,121"
 command! ColumnOff set colorcolumn=0
+
+if has('gui_running')
+  set spell spelllang=en_gb
+endif
+
+
+" Template user variables
+let g:templates_user_variables = [
+  \   ['CLASSNAME', 'GetClassName'],
+  \   ['LOWERFILE', 'GetLowerName'],
+  \ ]
+
+function! GetClassName()
+  return join([toupper(expand('%:t:r')[0]), expand('%:t:r')[1:]], "")
+endfunction()
+
+function! GetLowerName()
+  return join([tolower(expand('%:t:r')[0]), expand('%:t:r')[1:]], "")
+endfunction()
