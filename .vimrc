@@ -2,6 +2,12 @@ set enc=utf-8
 
 set guifont=Monospace\ Regular\ 9
 
+" Make file name visible.
+set laststatus=2
+
+" Higlight cursor line
+set cursorline
+
 "NeoBundle Scripts-----------------------------
 if &compatible
   set nocompatible               " Be iMproved
