@@ -28,7 +28,7 @@ NeoBundle 'flazz/vim-colorschemes'
 NeoBundle 'vim-pandoc/vim-pandoc'
 NeoBundle 'vim-pandoc/vim-pandoc-syntax'
 NeoBundle 'vim-pandoc/vim-pandoc-after'
-NeoBundle 'tex/vimpreviewpandoc'
+" NeoBundle 'tex/vimpreviewpandoc'
 
 " File templates.
 NeoBundle 'aperezdc/vim-template'
@@ -176,11 +176,11 @@ command! ReloadVimRc so ~/.vimrc
 
 " At - Refresh ctags and cscope.
 function! RefreshAllTags()
-  !ctags -R --extra=f --langmap=Asm:+.inc
+  !ctags -R --extra=f --langmap=Asm:+.inc --exclude=tmp
 "  !ctags -R --extra=f
   cs kill 0
-"  !cscope -bq $(find -iregex '.+\.\(cpp\|C\|c\|h\|H\|hpp\|asm\|inc\)')
-  !find -iregex '.+\.\(cpp\|C\|c\|h\|H\|hpp\|asm\|inc\|s\|S\)' -fprintf cscope.files '"\%p"\n'
+" --exclude=build  !cscope -bq $(find -iregex '.+\.\(cpp\|C\|c\|h\|H\|hpp\|asm\|inc\)')
+  !find -path ./tmp -prune -o -iregex '.+\.\(cpp\|C\|c\|h\|H\|hpp\|asm\|inc\|s\|S\)' -fprintf cscope.files '"\%p"\n'
   !cscope -bq
   cs add cscope.out
 endfunction
