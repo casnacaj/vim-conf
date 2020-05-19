@@ -28,7 +28,7 @@ NeoBundle 'flazz/vim-colorschemes'
 NeoBundle 'vim-pandoc/vim-pandoc'
 NeoBundle 'vim-pandoc/vim-pandoc-syntax'
 NeoBundle 'vim-pandoc/vim-pandoc-after'
-NeoBundle 'tex/vimpreviewpandoc'
+" NeoBundle 'tex/vimpreviewpandoc'
 
 " File templates.
 NeoBundle 'aperezdc/vim-template'
@@ -144,6 +144,11 @@ vmap <s-tab> :s/^/  /ge \| '<,'>s/\*\*\(\*\+\)/\1/ge<CR> gv
 nmap <c-tab> :s/^  //ge \| s/\*\*\*\+/\0**/ge<CR><CR>
 vmap <c-tab> :s/^  //ge \| '<,'>s/\*\*\*\+/\0**/ge<CR> gv
 
+nmap <C-n> :s/^\(.*\)$/#if FIXM1\r\1\r#endif/ge<CR>
+nmap b<C-n> :s/^\(.*\)$/#if FIXM1\r\1/ge<CR>
+nmap n<C-n> :s/^\(.*\)$/\1\r#endif/ge<CR>
+
+
 " Ctrl+Insert - comment (C-style)
 " " Ctrl+Insert - comment (vim style)
 " ; Crtl+Insert - comment (asm style)
@@ -176,11 +181,11 @@ command! ReloadVimRc so ~/.vimrc
 
 " At - Refresh ctags and cscope.
 function! RefreshAllTags()
-  !ctags -R --extra=f --langmap=Asm:+.inc
+  !ctags -R --extra=f --langmap=Asm:+.inc --exclude=tmp
 "  !ctags -R --extra=f
   cs kill 0
-"  !cscope -bq $(find -iregex '.+\.\(cpp\|C\|c\|h\|H\|hpp\|asm\|inc\)')
-  !find -iregex '.+\.\(cpp\|C\|c\|h\|H\|hpp\|asm\|inc\|s\|S\)' -fprintf cscope.files '"\%p"\n'
+" --exclude=build  !cscope -bq $(find -iregex '.+\.\(cpp\|C\|c\|h\|H\|hpp\|asm\|inc\)')
+  !find -path ./tmp -prune -o -iregex '.+\.\(cpp\|C\|c\|h\|H\|hpp\|asm\|inc\|s\|S\)' -fprintf cscope.files '"\%p"\n'
   !cscope -bq
   cs add cscope.out
 endfunction
@@ -215,8 +220,8 @@ hi def link FIXME_kw kbYellow
 hi ColorColumn guifg=black
 " Draw 80th columnt using colorcolumn.
 " Turn it by default.
-let &colorcolumn="81,121"
-command! ColumnOn let &colorcolumn="81,121"
+let &colorcolumn="81,121,151"
+command! ColumnOn let &colorcolumn="81,121,151"
 command! ColumnOff set colorcolumn=0
 
 if has('gui_running')
@@ -237,3 +242,6 @@ endfunction()
 function! GetLowerName()
   return join([tolower(expand('%:t:r')[0]), expand('%:t:r')[1:]], "")
 endfunction()
+
+set cursorline
+set cursorcolumn
