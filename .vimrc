@@ -2,6 +2,9 @@ set enc=utf-8
 
 set guifont=Monospace\ Regular\ 9
 
+" Make file name visible.
+set laststatus=2
+
 "NeoBundle Scripts-----------------------------
 if &compatible
   set nocompatible               " Be iMproved
@@ -243,5 +246,6 @@ function! GetLowerName()
   return join([tolower(expand('%:t:r')[0]), expand('%:t:r')[1:]], "")
 endfunction()
 
+" Higlight cursor line and column.
 set cursorline
 set cursorcolumn
